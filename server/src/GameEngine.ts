@@ -56,8 +56,10 @@ export class GameEngine {
 
   nextTurn() {
     let nextIdx = (this.currentTurnIdx + 1) % this.players.length;
-    while (!this.players[nextIdx].isAlive) {
+    let loopCount = 0;
+    while (!this.players[nextIdx].isAlive && loopCount < this.players.length) {
       nextIdx = (nextIdx + 1) % this.players.length;
+      loopCount++;
     }
     this.currentTurnIdx = nextIdx;
     this.startTurn();
@@ -74,7 +76,7 @@ export class GameEngine {
     }
 
     const target = this.players.find(p => p.id === targetId && p.isAlive);
-    if (!target) throw new Error('유효하지 않은 공격 대상입니다.');
+    if (!target) throw new Error('유효하지 않은 타겟입니다.');
 
     const { canAttack } = calculateDistance(attacker, target, this.alivePlayers);
     if (!canAttack) throw new Error('사거리가 닿지 않습니다.');

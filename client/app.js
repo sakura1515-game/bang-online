@@ -1,4 +1,3 @@
-// 실제 Render 백엔드 서버 주소 적용
 const SERVER_URL = (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.'))
   ? `http://${window.location.hostname}:3001`
   : 'https://bang-server-ozuj.onrender.com';
@@ -27,6 +26,7 @@ document.getElementById('btn-single').addEventListener('click', () => {
 
   socket.emit('create_room', { roomId: currentRoomId, maxPlayers, isSinglePlayer: true, userName });
   lobby.classList.add('hidden');
+  waitingRoom.classList.add('hidden');
   board.classList.remove('hidden');
 });
 
@@ -54,7 +54,7 @@ document.getElementById('btn-multi-join').addEventListener('click', () => {
   socket.emit('join_room', { roomId: currentRoomId, userName });
 });
 
-// 대기실 수신 이벤트
+// 대기실 업데이트 수신
 socket.on('lobby_update', ({ roomId, players, count, max, isHost: isRoomHost }) => {
   currentRoomId = roomId;
   if (isRoomHost !== undefined) isHost = isHost || isRoomHost;
@@ -80,7 +80,7 @@ btnStartMulti.addEventListener('click', () => {
   socket.emit('start_multi_game', { roomId: currentRoomId });
 });
 
-// 게임 시작 및 화면 동기화
+// 게임 상태 동기화 및 렌더링
 socket.on('game_state_update', (state) => {
   myState = state;
   waitingRoom.classList.add('hidden');
