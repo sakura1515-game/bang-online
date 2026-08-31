@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BANG! Online</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+
+  <!-- 로비 화면 -->
+  <div id="lobby" class="screen">
+    <h2>🔫 뱅!(BANG!) 온라인</h2>
+    <div class="form-container">
+      <input type="text" id="nickname" placeholder="닉네임" value="플레이어1">
+      <select id="max-players">
+        <option value="4">4명 (AI 포함)</option>
+        <option value="5">5명 (AI 포함)</option>
+        <option value="6">6명 (AI 포함)</option>
+        <option value="7">7명 (AI 포함)</option>
+      </select>
+      <button id="btn-single" class="btn-primary">🤖 싱글 플레이 (AI 대전)</button>
+      <button id="btn-multi" class="btn-secondary">🌐 멀티 방 만들기</button>
+    </div>
+  </div>
+
+  <!-- 인게임 화면 -->
+  <div id="board" class="screen hidden">
+    <header id="status-bar">상태 확인 중...</header>
+
+    <!-- 상대 플레이어 수평 뷰 -->
+    <section class="other-players-wrapper">
+      <div id="other-players" class="horizontal-scroll"></div>
+    </section>
+
+    <!-- 내 컨트롤 패널 -->
+    <section class="my-deck-panel">
+      <div id="my-profile"></div>
+
+      <div class="hand-scroll-wrapper">
+        <div id="my-hand" class="hand-cards"></div>
+      </div>
+
+      <button id="btn-end-turn" class="btn-action hidden">턴 종료</button>
+
+      <!-- 피격 방어 팝업 -->
+      <div id="bang-response-box" class="interrupt-overlay hidden">
+        <p>⚠️ 뱅(BANG!) 공격을 받았습니다!</p>
+        <div class="btn-group">
+          <button id="btn-use-missed" class="btn-missed">빗나감 사용</button>
+          <button id="btn-take-hit" class="btn-hit">피격 받기 (-1 HP)</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
