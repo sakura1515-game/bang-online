@@ -1,7 +1,7 @@
 // 로컬 테스트 시 자동으로 현재 접속한 호스트 IP:3001 로 연결 (모바일 로컬 테스트 지원)
 const SERVER_URL = (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.'))
   ? `http://${window.location.hostname}:3001`
-  : 'https://본인-백엔드-주소.onrender.com';
+  : 'https://bang-server-ozuj.onrender.com';
 
 const socket = io(SERVER_URL);
 let currentRoomId = '';
