@@ -1,7 +1,7 @@
-// 로컬 테스트 시 자동으로 현재 접속한 호스트 IP:3001 로 연결 (모바일 로컬 테스트 지원)
+// 실제 Render 백엔드 서버 주소 적용
 const SERVER_URL = (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.'))
   ? `http://${window.location.hostname}:3001`
-  : 'https://bang-server-ozuj.onrender.com'; // 👈 본인 Render 주소
+  : 'https://bang-server-ozuj.onrender.com';
 
 const socket = io(SERVER_URL);
 let currentRoomId = '';
@@ -68,7 +68,6 @@ socket.on('lobby_update', ({ roomId, players, count, max, isHost: isRoomHost }) 
   const playerListDiv = document.getElementById('waiting-player-list');
   playerListDiv.innerHTML = '<strong>대기 중인 플레이어:</strong><br>' + players.map((name, i) => `${i + 1}. ${name}`).join('<br>');
 
-  // 방장에게만 게임 시작 버튼 노출
   if (isHost) {
     btnStartMulti.classList.remove('hidden');
   } else {
