@@ -9,32 +9,54 @@
 </head>
 <body>
 
-  <!-- 로비 화면 -->
+  <!-- 1. 메인 로비 화면 -->
   <div id="lobby" class="screen">
     <h2>🔫 뱅!(BANG!) 온라인</h2>
     <div class="form-container">
-      <input type="text" id="nickname" placeholder="닉네임" value="플레이어1">
-      <select id="max-players">
-        <option value="4">4명 (AI 포함)</option>
-        <option value="5">5명 (AI 포함)</option>
-        <option value="6">6명 (AI 포함)</option>
-        <option value="7">7명 (AI 포함)</option>
-      </select>
-      <button id="btn-single" class="btn-primary">🤖 싱글 플레이 (AI 대전)</button>
-      <button id="btn-multi" class="btn-secondary">🌐 멀티 방 만들기</button>
+      <input type="text" id="nickname" placeholder="닉네임 입력" value="플레이어1">
+      
+      <!-- 방 생성 옵션 -->
+      <div style="background: #2b1a0e; padding: 10px; border-radius: 6px; display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 13px; color: #d4a373;">[새 게임 만들기]</span>
+        <select id="max-players">
+          <option value="4">4명 (AI 포함)</option>
+          <option value="5">5명 (AI 포함)</option>
+          <option value="6">6명 (AI 포함)</option>
+          <option value="7">7명 (AI 포함)</option>
+        </select>
+        <button id="btn-single" class="btn-primary">🤖 싱글 플레이 (AI 대전)</button>
+        <button id="btn-multi-create" class="btn-secondary">🌐 멀티 방 만들기</button>
+      </div>
+
+      <!-- 방 참가 옵션 -->
+      <div style="background: #2b1a0e; padding: 10px; border-radius: 6px; display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 13px; color: #d4a373;">[생성된 방 참가하기]</span>
+        <input type="text" id="join-room-code" placeholder="방 코드 입력 (예: ROOM_abc12)">
+        <button id="btn-multi-join" class="btn-primary" style="background:#22c55e; color:#000;">🚪 방 참가하기</button>
+      </div>
     </div>
   </div>
 
-  <!-- 인게임 화면 -->
+  <!-- 2. 멀티플레이 대기실 화면 -->
+  <div id="waiting-room" class="screen hidden" style="justify-content: center; align-items: center; padding: 20px;">
+    <h2>⏳ 멀티플레이 대기실</h2>
+    <div style="background: #3b2818; padding: 20px; border-radius: 10px; width: 100%; max-width: 320px; text-align: center;">
+      <p>방 코드: <strong id="display-room-code" style="color: #ffd700; font-size: 1.2rem;"></strong></p>
+      <p id="waiting-count">참가 인원: 1 / 4</p>
+      <div id="waiting-player-list" style="margin: 15px 0; font-size: 14px; text-align: left; background: #221307; padding: 10px; border-radius: 6px;"></div>
+      <p style="font-size: 12px; color: #aaa;">* 부족한 인원은 시작 시 AI 봇으로 자동 채워집니다.</p>
+      <button id="btn-start-multi" class="btn-action hidden">게임 시작</button>
+    </div>
+  </div>
+
+  <!-- 3. 인게임 화면 -->
   <div id="board" class="screen hidden">
     <header id="status-bar">상태 확인 중...</header>
 
-    <!-- 상대 플레이어 수평 뷰 -->
     <section class="other-players-wrapper">
       <div id="other-players" class="horizontal-scroll"></div>
     </section>
 
-    <!-- 내 컨트롤 패널 -->
     <section class="my-deck-panel">
       <div id="my-profile"></div>
 
@@ -44,7 +66,6 @@
 
       <button id="btn-end-turn" class="btn-action hidden">턴 종료</button>
 
-      <!-- 피격 방어 팝업 -->
       <div id="bang-response-box" class="interrupt-overlay hidden">
         <p>⚠️ 뱅(BANG!) 공격을 받았습니다!</p>
         <div class="btn-group">
